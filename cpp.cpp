@@ -14,11 +14,20 @@ string Sym::dump(int depth) { string S = "\n"+pad(depth)+head();
 		S += (*it)->dump(depth+1);
 	return S; }
 
-Sym* Sym::eval() { return this; }	
+Sym* Sym::eval() {
+	Sym*G = glob[val]; if (G) return (G);
+	for (auto it=nest.begin(),e=nest.end();it!=e;it++)
+		(*it) = (*it)->eval();
+	return this; }
 
 Sym* Sym::str() { return new Str(val); }
 
+Sym* Sym::add(Sym*o) { return new Error(head()+"+"+o->head()); }
+
+Error::Error(string V):Sym("error",V) { yyerror(V); }
+
 Str::Str(string V):Sym("str",V){}
+Sym* Str::add(Sym*o) { return new Str(val+o->str()->val); }
 string Str::head() { string S = "'";
 	for (int i=0;i<val.length();i++)
 		switch (val[i]) {
@@ -29,8 +38,16 @@ string Str::head() { string S = "'";
 	return S+"'"; }
 
 Vector::Vector():Sym("vector","[]"){}
+string Vector::head() { return "[]"; }
 
 Op::Op(string V):Sym("op",V){}
+Sym* Op::eval() {
+	if (val=="~") return nest[0]; else Sym::eval();
+//	if (val=="=") return nest[0]->eq(nest[1]);
+//	if (val=="@") return nest[0]->at(nest[1]);
+	if (val=="+") return nest[0]->add(nest[1]);
+//	if (val=="/") return nest[0]->div(nest[1]);
+	return this; }
 
 map<string,Sym*> glob;
 void glob_init() {

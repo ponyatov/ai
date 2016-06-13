@@ -17,17 +17,20 @@ struct Sym {
 	virtual string dump(int=0); virtual string head(); string pad(int);
 	virtual Sym* eval();
 	virtual Sym* str();
+//	virtual Sym* eq(Sym*);
+//	virtual Sym* at(Sym*);
+	virtual Sym* add(Sym*);	
 };
 extern map<string,Sym*> glob;
 extern void glob_init();
 
 struct Error: Sym { Error(string); };
 
-struct Str: Sym { Str(string); string head(); };
+struct Str: Sym { Str(string); string head(); Sym*add(Sym*); };
 
-struct Vector:Sym { Vector(); };
+struct Vector:Sym { Vector(); string head(); };
 
-struct Op: Sym { Op(string); };
+struct Op: Sym { Op(string); Sym*eval(); };
 
 extern int yylex();
 extern int yylineno;

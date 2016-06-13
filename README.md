@@ -1,4 +1,4 @@
-# ai
+# !(logo64x64.png) ai
 ### some exercises on AI application using translational programming
 
 (c) Dmitry Ponyatov <<dponyatov@gmail.com>> , GNU LesserGPL

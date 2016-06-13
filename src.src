@@ -2,12 +2,12 @@
 next = dir @ MODULE
 
 next/README.md = [
-'# !('LOGO'.png) 'MODULE
-'### 'ABOUT
+'# !('+LOGO+'.png) '+MODULE
+'### '+ABOUT
 ''
-'(c) 'AUTHOR' , 'LICENSE
+'(c) '+AUTHOR+' , '+LICENSE
 ''
-'github: 'GITHUB
+'github: '+GITHUB
 ''
 '### Computer Science - Artificial Intelligence /Deepak Khemani, IIT Madras/
 https://www.youtube.com/playlist?list=PLbMVogVj5nJQu5qwm-HmJgjmeGhsErvXD'
