@@ -1,0 +1,75 @@
+
+next = dir @ MODULE
+
+next/README.md = [
+'# !('LOGO'.png) 'MODULE
+'### 'ABOUT
+''
+'(c) 'AUTHOR' , 'LICENSE
+''
+'github: 'GITHUB
+''
+'### Computer Science - Artificial Intelligence /Deepak Khemani, IIT Madras/
+https://www.youtube.com/playlist?list=PLbMVogVj5nJQu5qwm-HmJgjmeGhsErvXD'
+]
+
+.end
+
+
+next/meta.hpp = [
+#ifndef _H_META
+#define _H_META
+//#define MODULE	"MODULE"
+#define ABOUT	"ABOUT"
+#define AUTHOR	"AUTHOR"
+#define LICENSE	"LICENSE"
+#define GITHUB	("https://github.com/ponyatov/" MODULE)
+#define LOGO	"logo64x64"
+#endif // _H_META
+]
+
+next/bat.bat = [
+@start .
+@git gui
+@gvim -p src.src log.log ypp.ypp lpp.lpp hpp.hpp cpp.cpp Makefile
+]
+
+next/.gitignore = [
+*~
+*swp
+exe.exe
+log.log
+ypp.tab.?pp
+lex.yy.c
+]
+
+next/Makefile = [
+log.log: src.src ./exe.exe
+	./exe.exe < $< > $@ && tail $(TAIL) $@
+C = cpp.cpp ypp.tab.cpp lex.yy.c
+H = hpp.hpp ypp.tab.hpp meta.hpp
+CXXFLAGS += -std=gnu++11 -D MODULE=\"$(notdir $(CURDIR))\"
+./exe.exe: $(C) $(H)
+	$(CXX) $(CXXFLAGS) -o $@ $(C) $(L)
+ypp.tab.cpp: ypp.ypp
+	bison $<
+lex.yy.c: lpp.lpp
+	flex $<
+]
+
+next/ypp.ypp = [
+%{
+#include "hpp.hpp"
+%}
+%defines %union { Sym*o; }
+%token <o> SYM
+%type <o> ex scalar
+%%
+REPL : | REPL ex { cout << $2->eval()->dump() << endl; } ;
+scalar : SYM ;
+ex : scalar
+;
+%%
+]
+
+
