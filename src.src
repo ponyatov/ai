@@ -2,7 +2,7 @@
 next = dir @ MODULE
 
 next/README.md = [
-'# !('+LOGO+'.png) '+MODULE
+'# ![]('+LOGO+'.png) '+MODULE
 '### '+ABOUT
 ''
 '(c) '+AUTHOR+' , '+LICENSE
